@@ -2,6 +2,7 @@ const { getCategorias } = require("./controladores/categoria");
 const usuario = require("./controladores/usuario");
 
 const validateRequest = require("./intermediarios/validateRequest");
+const validateToken = require("./intermediarios/validateToken");
 
 const usuarioSchema = require("./joiSchemas/usuarioSchema");
 const loginSchema = require("./joiSchemas/loginSchema");

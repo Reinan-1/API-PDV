@@ -10,6 +10,17 @@ const config = {
 
 module.exports = {
 
-    createToken: data => jwt.sign(data, config.pass, config.options)
+    createToken: data => jwt.sign(data, config.pass, config.options),
+
+    getUsuario: token => {
+        try {
+            const {id} = jwt.verify(token, config.pass);
+
+            return id;
+
+        } catch (error) {
+            return
+        }
+    }
 
 }
