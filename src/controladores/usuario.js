@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const db = require("../servicos/banco-dados");
+const jwt = require("../servicos/jwt");
 
 module.exports = {
     createUsuario: async (req, res) => {
@@ -18,6 +19,29 @@ module.exports = {
         } catch (error) {
             return res.status(500).json({ "mensagem": "Erro interno do servidor." });
         }
+    },
 
+    loginUsuario: async (req, res) => {
+        const { email, senha } = req.body;
+
+        try {
+            const usuarioExists = await db.getUsuarioCredencial(email);
+
+            if (!usuarioExists) return res.status(401).json({ "mensagem": "E-mail e/ou senha inválido(s)." });
+
+            const senhaValida = await bcrypt.compare(senha, usuarioExists.senha);
+
+            if (!senhaValida) return res.status(401).json({ "mensagem": "E-mail e/ou senha inválido(s)." });
+
+            const token = jwt.createToken({ id: usuarioExists.id });
+
+            const { senha: _, ...usuarioLogado } = usuarioExists;
+
+            return res.status(200).json({ usuario: usuarioLogado, token });
+
+        } catch (error) {
+
+            return res.status(500).json({ "mensagem": "Erro interno do servidor." })
+        }
     }
 }
