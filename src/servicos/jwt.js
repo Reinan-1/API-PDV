@@ -9,7 +9,6 @@ const config = {
 }
 
 module.exports = {
-
     createToken: data => jwt.sign(data, config.pass, config.options),
 
     getUsuario: token => {
@@ -22,5 +21,4 @@ module.exports = {
             return
         }
     }
-
 }
