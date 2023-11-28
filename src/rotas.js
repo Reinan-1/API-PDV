@@ -1,5 +1,7 @@
+const { getCategorias } = require("./controladores/categoria");
+
 const rotas = require("express").Router();
 
-rotas.get("/", (req, res) => res.json({"mensagem":"tudo ok"}));
+rotas.get("/categoria", getCategorias);
 
 module.exports = rotas;
