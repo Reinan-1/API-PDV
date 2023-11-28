@@ -15,4 +15,8 @@ rotas.post("/usuario", validateRequest(usuarioSchema), usuario.createUsuario);
 
 rotas.post("/login", validateRequest(loginSchema), usuario.loginUsuario);
 
+rotas.use(validateToken);
+
+rotas.get("/usuario", usuario.getPerfil);
+
 module.exports = rotas;
