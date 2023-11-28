@@ -1,0 +1,19 @@
+{
+  "name": "api-pdv",
+  "version": "1.0.0",
+  "description": "Esta é uma API para um PDV (Frente de Caixa). Seu propósito principal é fornecer funcionalidades cruciais para a administração eficiente de transações comerciais, abrangendo aspectos como vendas, controle de estoque e interações com clientes.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
