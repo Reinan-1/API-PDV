@@ -23,4 +23,6 @@ module.exports = {
     },
 
     getUsuarioCredencial: async email => knex("usuarios").where({ email }).first(),
+
+    getUsuarioByID: async id => knex("usuarios").select(["id", "nome", "email"]).where({ id }).first(),
 }
