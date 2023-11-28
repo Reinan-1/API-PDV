@@ -240,7 +240,7 @@ Esta API utiliza um banco de dados chamado `pdv` com as seguintes tabelas:
   O corpo (body) deverá possuir um objeto com as seguintes propriedades (respeitando estes nomes):
   - nome
   - email
-  - senha
+  - senha (mínimo de 3 caracteres)
     
 #### **Exemplo de requisição**
 ```javascript
