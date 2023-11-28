@@ -79,7 +79,7 @@ Siga estas etapas para configurar e usar a API:
 ##### 1. Clone este repositório para o seu ambiente de desenvolvimento local:
 
 ```sh
-git clone https://github.com/Reinan-1/desafio-backend-modulo-05-sistema-pdv-b2b-ifood-t08.git
+git clone https://github.com/Reinan-1/API-PDV.git
 ```
 
 ##### 2. Navegue até a pasta do projeto e instale as dependências:
