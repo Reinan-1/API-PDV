@@ -11,5 +11,15 @@ const knex = require("knex")({
 
 
 module.exports = {
-    getCategorias : async () => knex("categorias")
+    getCategorias: async () => knex("categorias"),
+
+    isEmailAlreadyRegistered: async (email) => knex("usuarios").where({ email }).first(),
+
+    createUsuario: async ({ nome, email, senha }) => {
+        const [usuario] = await knex("usuarios")
+            .insert({ nome, email, senha })
+            .returning(["id", "nome", "email"]);
+
+        return usuario;
+    }
 }

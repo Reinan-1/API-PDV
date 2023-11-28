@@ -2,14 +2,14 @@
 CREATE DATABASE pdv;
 
 CREATE TABLE categorias (
-    id SERIAL PRIMARY KEY;
-    descricao TEXT NOT NULL;
+    id SERIAL PRIMARY KEY,
+    descricao TEXT NOT NULL
 );
 
 -- Inicie a tabela inserindo os seguintes valores.
-insert into categorias 
+INSERT INTO categorias 
 (descricao)
-values
+VALUES
 ('Informática'), 
 ('Celulares'), 
 ('Beleza e Perfumaria'), 
@@ -19,3 +19,10 @@ values
 ('Moda'), 
 ('Bebê'), 
 ('Games');
+
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    senha TEXT NOT NULL
+);
