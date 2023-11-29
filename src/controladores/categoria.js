@@ -8,7 +8,7 @@ module.exports = {
 
             return res.json(categorias);
         } catch (error) {
-            return res.status(500).json({ "mensagem": "Erro interno do servidor." });
+            return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
         }
     }
 }

@@ -1,5 +1,6 @@
 const { getCategorias } = require("./controladores/categoria");
 const usuario = require("./controladores/usuario");
+const produto = require("./controladores/produto");
 
 const validateRequest = require("./intermediarios/validateRequest");
 const validateToken = require("./intermediarios/validateToken");
@@ -21,6 +22,8 @@ rotas.use(validateToken);
 rotas.get("/usuario", usuario.getPerfil);
 
 rotas.put("/usuario", validateRequest(usuarioSchema), usuario.updateUsuario);
+
+rotas.post("/produto", produto.createProduto);
 
 rotas.use(routeNotFound)
 
