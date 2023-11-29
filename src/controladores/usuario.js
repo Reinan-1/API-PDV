@@ -46,4 +46,23 @@ module.exports = {
     },
 
     getPerfil: (req, res) => res.status(200).json(req.usuario),
+
+    updateUsuario: async (req, res) => {
+        const { nome, email, senha } = req.body;
+        const { id } = req.usuario;
+
+        try {
+            const emailExists = await db.isEmailAlreadyRegistered(email, id);
+
+            if (emailExists) return res.status(400).json({ "mensagem": "O email informado já está registrado no sistema." });
+
+            const encryptedSenha = await bcrypt.hash(senha, 10);
+
+            await db.updateUsuario({ id, nome, email, encryptedSenha });
+
+            return res.status(204).json();
+        } catch (error) {
+            return res.status(500).json({ "mensagem": "Erro interno do servidor." })
+        }
+    }
 }

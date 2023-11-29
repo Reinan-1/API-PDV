@@ -20,6 +20,8 @@ rotas.use(validateToken);
 
 rotas.get("/usuario", usuario.getPerfil);
 
+rotas.put("/usuario", validateRequest(usuarioSchema), usuario.updateUsuario);
+
 rotas.use(routeNotFound)
 
 module.exports = rotas;
