@@ -340,7 +340,7 @@ Para acessar as funcionalidades a seguir, é necessário incluir um token de aut
   O corpo (body) deverá possuir um objeto com as seguintes propriedades (respeitando estes nomes):
   - nome
   - email
-  - senha
+  - senha (mínimo de 3 caracteres)
     
 #### **Exemplo de requisição**
 ```javascript
