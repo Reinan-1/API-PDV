@@ -10,6 +10,8 @@ const knex = require("knex")({
 });
 
 module.exports = {
+    getCategoriaByID: async id => knex("categorias").where({id}).first(),
+
     getCategorias: async () => knex("categorias"),
 
     isEmailAlreadyRegistered: async (email, id = null) => knex("usuarios").select("email").where({ email }).whereNot({ id }).first(),
@@ -24,7 +26,30 @@ module.exports = {
 
     getUsuarioByID: async id => knex("usuarios").select(["id", "nome", "email"]).where({ id }).first(),
 
-    updateUsuario: async ({id, nome, email, senha}) => {
-        await knex("usuarios").where({id}).update({nome, email, senha});
-    }
+    updateUsuario: async ({ id, nome, email, senha }) => {
+        await knex("usuarios").where({ id }).update({ nome, email, senha });
+    },
+
+    createProduto: async ({ descricao, quantidade_estoque, valor, categoria_id, produto_imagem }) => {
+        const [produto] = await knex("produtos")
+            .insert({
+                descricao,
+                quantidade_estoque,
+                valor,
+                categoria_id,
+                produto_imagem
+            })
+            .returning("*");
+
+        return produto;
+    },
+
+    updateProduto: async ({ id, descricao, quantidade_estoque, valor, categoria_id, produto_imagem }) => {
+        const [produto] = await knex("produtos")
+            .where({ id })
+            .update({ descricao, quantidade_estoque, valor, categoria_id, produto_imagem })
+            .returning("*");
+
+        return produto;
+    },
 }

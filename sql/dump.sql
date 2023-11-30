@@ -26,3 +26,12 @@ CREATE TABLE usuarios (
     email TEXT NOT NULL UNIQUE,
     senha TEXT NOT NULL
 );
+
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    descricao TEXT NOT NULL,
+    quantidade_estoque INTEGER NOT NULL,
+    valor INTEGER NOT NULL,
+    categoria_id INTEGER NOT NULL REFERENCES categorias(id),
+    produto_imagem TEXT
+);
