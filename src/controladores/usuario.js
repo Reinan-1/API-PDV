@@ -17,7 +17,7 @@ module.exports = {
 
             return res.status(201).json(usuario);
         } catch (error) {
-            return res.status(500).json({ "mensagem": "Erro interno do servidor." });
+            return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
         }
     },
 
@@ -41,7 +41,7 @@ module.exports = {
 
         } catch (error) {
 
-            return res.status(500).json({ "mensagem": "Erro interno do servidor." })
+            return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." })
         }
     },
 
@@ -62,7 +62,7 @@ module.exports = {
 
             return res.status(204).json();
         } catch (error) {
-            return res.status(500).json({ "mensagem": "Erro interno do servidor." })
+            return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." })
         }
     }
 }
