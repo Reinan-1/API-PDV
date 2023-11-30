@@ -5,9 +5,11 @@ const produto = require("./controladores/produto");
 const validateRequest = require("./intermediarios/validateRequest");
 const validateToken = require("./intermediarios/validateToken");
 const routeNotFound = require("./intermediarios/routeNotFound");
+const multer = require("./intermediarios/multer");
 
 const usuarioSchema = require("./joiSchemas/usuarioSchema");
 const loginSchema = require("./joiSchemas/loginSchema");
+const produtoSchema = require("./joiSchemas/produtoSchema");
 
 const rotas = require("express").Router();
 
@@ -23,7 +25,7 @@ rotas.get("/usuario", usuario.getPerfil);
 
 rotas.put("/usuario", validateRequest(usuarioSchema), usuario.updateUsuario);
 
-rotas.post("/produto", produto.createProduto);
+rotas.post("/produto", multer.single("produto_imagem"), validateRequest(produtoSchema), produto.createProduto);
 
 rotas.use(routeNotFound)
 

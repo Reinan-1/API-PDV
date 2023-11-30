@@ -31,7 +31,7 @@ module.exports = {
     },
 
     createProduto: async ({ descricao, quantidade_estoque, valor, categoria_id, produto_imagem }) => {
-        const [produto] = knex("produtos")
+        const [produto] = await knex("produtos")
             .insert({
                 descricao,
                 quantidade_estoque,
@@ -39,15 +39,17 @@ module.exports = {
                 categoria_id,
                 produto_imagem
             })
-            .returning([
-                "id",
-                "descricao",
-                "quantidade_estoque",
-                "valor",
-                "categoria_id",
-                "produto_imagem"
-            ]);
+            .returning("*");
 
         return produto;
-    }
+    },
+
+    updateProduto: async ({ id, descricao, quantidade_estoque, valor, categoria_id, produto_imagem }) => {
+        const [produto] = await knex("produtos")
+            .where({ id })
+            .update({ descricao, quantidade_estoque, valor, categoria_id, produto_imagem })
+            .returning("*");
+
+        return produto;
+    },
 }
