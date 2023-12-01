@@ -93,7 +93,7 @@ module.exports = {
         try {
             const produtos = await db.getProdutos(categoria_id);
 
-            if(produtos.length < 1) {
+            if (produtos.length < 1) {
                 return res.status(404).json({ mensagem: "Não existem produtos cadastrados com essa categoria" })
             }
 
@@ -115,6 +115,30 @@ module.exports = {
             if (!produtoExists) return res.status(404).json({ "mensagem": "Produto não encontrado." });
 
             return res.status(200).json(produtoExists);
+        } catch (error) {
+            return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
+        }
+    },
+
+    deleteProduto: async (req, res) => {
+        const id = Number(req.params.id);
+
+        if (isNaN(id)) return res.status(400).json({ "mensagem": "ID inválido." });
+
+        try {
+            const produtoExists = await db.getProdutoByID(id);
+
+            if (!produtoExists) return res.status(404).json({ "mensagem": "Produto não encontrado." });
+
+            if (produtoExists.produto_imagem) {
+                const imageName = produtoExists.produto_imagem.slice(produtoExists.produto_imagem.lastIndexOf('/'));
+
+                await storage.deleteFile(`produtos/${produtoExists.id}${imageName}`);
+            }
+
+            await db.deleteProduto(id);
+
+            return res.status(204).json();
         } catch (error) {
             return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
         }

@@ -69,4 +69,6 @@ module.exports = {
     
         return produtos;
     },
+
+    deleteProduto: async id => knex("produtos").where({id}).delete(),
 }
