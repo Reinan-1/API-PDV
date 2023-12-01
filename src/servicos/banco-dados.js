@@ -10,7 +10,7 @@ const knex = require("knex")({
 });
 
 module.exports = {
-    getCategoriaByID: async id => knex("categorias").where({id}).first(),
+    getCategoriaByID: async id => knex("categorias").where({ id }).first(),
 
     getCategorias: async () => knex("categorias"),
 
@@ -54,4 +54,19 @@ module.exports = {
     },
 
     getProdutoByID: async id => knex("produtos").where({ id }).first(),
+
+    getProdutos: async (categoria_id) => {
+        const query = knex("produtos")
+            .select("produtos.*", "categorias.descricao as categoria_nome")
+            .join("categorias", "produtos.categoria_id", "categorias.id")
+            .orderBy("produtos.id", "asc");
+
+        if (categoria_id) {
+            query.where({ categoria_id });
+        }
+
+        const produtos = await query;
+    
+        return produtos;
+    },
 }

@@ -29,6 +29,8 @@ rotas.post("/produto", multer.single("produto_imagem"), validateRequest(produtoS
 
 rotas.put("/produto/:id", multer.single("produto_imagem"), validateRequest(produtoSchema), produto.updateProduto);
 
+rotas.get("/produto", produto.getProdutos);
+
 rotas.use(routeNotFound)
 
 module.exports = rotas;
