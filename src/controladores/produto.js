@@ -102,5 +102,21 @@ module.exports = {
             return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
         }
 
+    },
+
+    getProdutoByID: async (req, res) => {
+        const id = Number(req.params.id);
+
+        if (isNaN(id)) return res.status(400).json({ "mensagem": "ID inválido." });
+
+        try {
+            const produtoExists = await db.getProdutoByID(id);
+
+            if (!produtoExists) return res.status(404).json({ "mensagem": "Produto não encontrado." });
+
+            return res.status(200).json(produtoExists);
+        } catch (error) {
+            return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
+        }
     }
 }
