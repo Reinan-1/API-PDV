@@ -46,7 +46,7 @@ module.exports = {
         const produto = req.body;
         const id = Number(req.params.id);
 
-        if(isNaN(id)) return res.status(400).json({ "mensagem": "ID inválido." });
+        if (isNaN(id)) return res.status(400).json({ "mensagem": "ID inválido." });
 
         produto.id = id;
 
@@ -56,7 +56,7 @@ module.exports = {
                 db.getCategoriaByID(produto.categoria_id),
                 db.getProdutoByID(produto.id)
             ]);
-            
+
             if (!categoriaExists) return res.status(404).json({ "mensagem": "Categoria não encontrada." });
 
             if (!produtoExists) return res.status(404).json({ "mensagem": "Produto não encontrado." });
@@ -64,7 +64,7 @@ module.exports = {
             if (req.file) {
                 const { originalname, buffer, mimetype } = req.file;
 
-                if(produtoExists.produto_imagem){
+                if (produtoExists.produto_imagem) {
                     const imageName = produtoExists.produto_imagem.slice(produtoExists.produto_imagem.lastIndexOf('/'));
 
                     await storage.deleteFile(`produtos/${produtoExists.id}${imageName}`);
@@ -85,5 +85,22 @@ module.exports = {
         } catch (error) {
             return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
         }
+    },
+
+    getProdutos: async (req, res) => {
+        const categoria_id = Number(req.query.categoria_id);
+
+        try {
+            const produtos = await db.getProdutos(categoria_id);
+
+            if(produtos.length < 1) {
+                return res.status(404).json({ mensagem: "Não existem produtos cadastrados com essa categoria" })
+            }
+
+            return res.status(200).json(produtos);
+        } catch (error) {
+            return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
+        }
+
     }
 }
