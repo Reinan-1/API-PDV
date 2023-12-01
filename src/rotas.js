@@ -33,6 +33,8 @@ rotas.get("/produto", produto.getProdutos);
 
 rotas.get("/produto/:id", produto.getProdutoByID);
 
+rotas.delete("/produto/:id", produto.deleteProduto);
+
 rotas.use(routeNotFound)
 
 module.exports = rotas;
