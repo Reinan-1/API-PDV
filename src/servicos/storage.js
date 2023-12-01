@@ -24,7 +24,7 @@ module.exports = {
         }
     },
 
-    deteleFile: async (path) => {
+    deleteFile: async (path) => {
         await s3.deleteObject({
             Bucket: process.env.BUCKET_NAME,
             Key: path
