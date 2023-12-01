@@ -31,6 +31,8 @@ rotas.put("/produto/:id", multer.single("produto_imagem"), validateRequest(produ
 
 rotas.get("/produto", produto.getProdutos);
 
+rotas.get("/produto/:id", produto.getProdutoByID);
+
 rotas.use(routeNotFound)
 
 module.exports = rotas;
