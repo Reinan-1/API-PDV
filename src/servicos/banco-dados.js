@@ -52,4 +52,6 @@ module.exports = {
 
         return produto;
     },
+
+    getProdutoByID: async id => knex("produtos").where({ id }).first(),
 }
