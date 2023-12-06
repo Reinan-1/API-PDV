@@ -90,8 +90,26 @@ module.exports = {
         return cliente;
     },
 
-    isEmailAlreadyRegisteredInClientes: async (email) => knex("clientes").select("email").where({ email }).first(),
+    isEmailAlreadyRegisteredInClientes: async (email, id = null) => knex("clientes").select("email").where({ email }).whereNot({ id }).first(),
 
-    isCPFAlreadyRegistered: async (cpf) => knex("clientes").select("cpf").where({ cpf }).first(),
+    isCPFAlreadyRegistered: async (cpf, id = null) => knex("clientes").select("cpf").where({ cpf }).whereNot({ id }).first(),
+
+    getClienteByID: async id => knex("clientes").where({ id }).first(),
+
+    updateCliente: async ({ id, nome, email, cpf, cep, rua, numero, bairro, cidade, estado }) => {
+        await knex("clientes")
+            .update({
+                nome,
+                email,
+                cpf,
+                cep,
+                rua,
+                numero,
+                bairro,
+                cidade,
+                estado
+            })
+            .where({id});
+    }
 
 }

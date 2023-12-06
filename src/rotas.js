@@ -39,6 +39,8 @@ rotas.delete("/produto/:id", produto.deleteProduto);
 
 rotas.post("/cliente", validateRequest(clienteSchema), cliente.createCliente);
 
+rotas.put("/cliente/:id", validateRequest(clienteSchema), cliente.updateCliente);
+
 rotas.use(routeNotFound)
 
 module.exports = rotas;
