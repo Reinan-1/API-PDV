@@ -66,9 +66,32 @@ module.exports = {
         }
 
         const produtos = await query;
-    
+
         return produtos;
     },
 
-    deleteProduto: async id => knex("produtos").where({id}).delete(),
+    deleteProduto: async id => knex("produtos").where({ id }).delete(),
+
+    createCliente: async ({ nome, email, cpf, cep, rua, numero, bairro, cidade, estado }) => {
+        const [cliente] = await knex("clientes")
+            .insert({
+                nome,
+                email,
+                cpf,
+                cep,
+                rua,
+                numero,
+                bairro,
+                cidade,
+                estado
+            })
+            .returning("*");
+
+        return cliente;
+    },
+
+    isEmailAlreadyRegisteredInClientes: async (email) => knex("clientes").select("email").where({ email }).first(),
+
+    isCPFAlreadyRegistered: async (cpf) => knex("clientes").select("cpf").where({ cpf }).first(),
+
 }
