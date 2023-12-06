@@ -50,5 +50,15 @@ module.exports = {
         } catch (error) {
             return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
         }
+    },
+
+    getClientes: async (req, res) => {
+        try {
+            const clientes = await db.getClientes();
+
+            return res.json(clientes);
+        } catch (error) {
+            return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
+        }
     }
 }
