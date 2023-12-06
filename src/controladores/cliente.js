@@ -31,9 +31,9 @@ module.exports = {
 
         try {
 
-            const clienteExiste = await db.getClienteByID(id);
+            const clienteExists = await db.getClienteByID(id);
 
-            if (!clienteExiste) return res.status(404).json({ mensagem: "Cliente não encontrado." });
+            if (!clienteExists) return res.status(404).json({ mensagem: "Cliente não encontrado." });
 
             const [emailExists, cpfExists] = await Promise.all([
                 db.isEmailAlreadyRegisteredInClientes(email, id),
@@ -57,6 +57,22 @@ module.exports = {
             const clientes = await db.getClientes();
 
             return res.json(clientes);
+        } catch (error) {
+            return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
+        }
+    },
+
+    getClienteByID: async (req, res) => {
+        const id = Number(req.params.id);
+
+        if (isNaN(id)) return res.status(400).json({ "mensagem": "ID inválido." });
+
+        try {
+            const clienteExists = await db.getClienteByID(id);
+
+            if (!clienteExists) return res.status(404).json({ mensagem: "Cliente não encontrado." });
+
+            return res.json(clienteExists);
         } catch (error) {
             return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
         }
