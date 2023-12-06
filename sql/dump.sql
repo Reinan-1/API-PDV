@@ -35,3 +35,16 @@ CREATE TABLE produtos (
     categoria_id INTEGER NOT NULL REFERENCES categorias(id),
     produto_imagem TEXT
 );
+
+CREATE TABLE clientes (
+	id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+	cpf VARCHAR(11) NOT NULL UNIQUE,
+	cep VARCHAR(8),
+	rua TEXT,
+	numero TEXT,
+	bairro TEXT,
+	cidade TEXT,
+	estado TEXT
+);
