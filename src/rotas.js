@@ -43,6 +43,8 @@ rotas.put("/cliente/:id", validateRequest(clienteSchema), cliente.updateCliente)
 
 rotas.get("/cliente", cliente.getClientes);
 
+rotas.get("/cliente/:id", cliente.getClienteByID);
+
 rotas.use(routeNotFound)
 
 module.exports = rotas;
