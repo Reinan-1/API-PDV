@@ -109,7 +109,9 @@ module.exports = {
                 cidade,
                 estado
             })
-            .where({id});
-    }
+            .where({ id });
+    },
+
+    getClientes: async () => knex("clientes").orderBy("id", "asc"),
 
 }
