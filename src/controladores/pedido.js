@@ -1,4 +1,5 @@
 const db = require("../servicos/banco-dados");
+const { enviarConfirmacaoPedido } = require("../utils/enviarConfirmacaoPedido");
 
 module.exports = {
     createPedido: async (req, res) => {
@@ -47,12 +48,12 @@ module.exports = {
             })
 
             await db.createPedidoProdutos(pedidoProdutos);
-
-            //TODO
-            //await enviarConfirmacaoPedido(cliente, pedido[0]);
+            
+            await enviarConfirmacaoPedido(clienteExists, pedido);
 
             return res.status(201).json(pedido);
         } catch (error) {
+            console.log(error.message);
             return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
         }
 
