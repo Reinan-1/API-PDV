@@ -2,6 +2,7 @@ const { getCategorias } = require("./controladores/categoria");
 const usuario = require("./controladores/usuario");
 const produto = require("./controladores/produto");
 const cliente = require("./controladores/cliente");
+const pedido = require("./controladores/pedido");
 
 const validateRequest = require("./intermediarios/validateRequest");
 const validateToken = require("./intermediarios/validateToken");
@@ -12,6 +13,7 @@ const usuarioSchema = require("./joiSchemas/usuarioSchema");
 const loginSchema = require("./joiSchemas/loginSchema");
 const produtoSchema = require("./joiSchemas/produtoSchema");
 const clienteSchema = require("./joiSchemas/clienteSchema");
+const pedidoSchema = require("./joiSchemas/pedidoSchema");
 
 const rotas = require("express").Router();
 
@@ -44,6 +46,8 @@ rotas.put("/cliente/:id", validateRequest(clienteSchema), cliente.updateCliente)
 rotas.get("/cliente", cliente.getClientes);
 
 rotas.get("/cliente/:id", cliente.getClienteByID);
+
+rotas.post("/pedido", validateRequest(pedidoSchema), pedido.createPedido);
 
 rotas.use(routeNotFound)
 
