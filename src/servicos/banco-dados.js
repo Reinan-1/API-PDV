@@ -114,4 +114,19 @@ module.exports = {
 
     getClientes: async () => knex("clientes").orderBy("id", "asc"),
 
+    createPedido: async ({ cliente_id, observacao, valor_total }) => {
+        const [pedido] = await knex("pedidos")
+            .insert({
+                cliente_id,
+                observacao,
+                valor_total
+            }).returning("*");
+
+        return pedido;
+    },
+
+    createPedidoProdutos: async (pedidoProdutos) => {
+        await knex("pedido_produtos")
+            .insert(pedidoProdutos);
+    }
 }
