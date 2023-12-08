@@ -128,5 +128,20 @@ module.exports = {
     createPedidoProdutos: async (pedidoProdutos) => {
         await knex("pedido_produtos")
             .insert(pedidoProdutos);
+    },
+
+    getPedidos: async (cliente_id) => {
+        const query = knex('pedidos')
+        .select('pedidos.*', 'pedido_produtos.*')
+        .join("pedido_produtos", "pedido_produtos.pedido_id", "pedidos.id")
+        .orderBy("pedidos.id", "asc");
+
+        if (cliente_id) {
+            query.where({ cliente_id });
+        }
+
+        const pedidos = await query;
+
+        return pedidos;
     }
 }
