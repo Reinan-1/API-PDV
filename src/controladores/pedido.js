@@ -48,15 +48,32 @@ module.exports = {
             })
 
             await db.createPedidoProdutos(pedidoProdutos);
-            
+
             await enviarConfirmacaoPedido(clienteExists, pedido);
 
             return res.status(201).json(pedido);
         } catch (error) {
-            console.log(error.message);
             return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
         }
+    },
 
+    getPedidos: async (req, res) => {
+        const cliente_id = Number(req.query.cliente_id);
+
+        try {
+
+            const pedidos = await db.getPedidos(cliente_id);
+
+            if (pedidos.length < 1) {
+                return res.status(404).json({ "mensagem": "Não existe pedidos cadastrados para esse cliente." })
+            }
+
+            const resultado = mostrarPedidosProdutos(pedidos);
+
+            return res.status(200).json(resultado);
+        } catch (error) {
+            return res.status(500).json({ "mensagem": "Ocorreu um erro interno no servidor." });
+        }
     }
 }
 
@@ -86,4 +103,42 @@ const atualizarEstoqueProduto = async (produtosAgrupados) => {
         await db.updateProduto({ id, quantidade_estoque: novaQuantidade });
 
     }
-}
+};
+
+const mostrarPedidosProdutos = (pedidos) => {
+    const resultado = [];
+
+    for (const pedido of pedidos) {
+        const existePedido = resultado.find((p) => p.pedido.id === pedido.pedido_id);
+
+        if (!existePedido) {
+            resultado.push({
+                pedido: {
+                    id: pedido.pedido_id,
+                    valor_total: pedido.valor_total,
+                    observacao: pedido.observacao,
+                    cliente_id: pedido.cliente_id
+                },
+                pedido_produtos: [
+                    {
+                        id: pedido.id,
+                        quantidade_produto: pedido.quantidade_produto,
+                        valor_produto: pedido.valor_produto,
+                        pedido_id: pedido.pedido_id,
+                        produto_id: pedido.produto_id
+                    }
+                ]
+            });
+        } else {
+            existePedido.pedido_produtos.push({
+                id: pedido.id,
+                quantidade_produto: pedido.quantidade_produto,
+                valor_produto: pedido.valor_produto,
+                pedido_id: pedido.pedido_id,
+                produto_id: pedido.produto_id
+            });
+        }
+    };
+    
+    return resultado;
+};

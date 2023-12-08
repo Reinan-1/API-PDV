@@ -49,6 +49,8 @@ rotas.get("/cliente/:id", cliente.getClienteByID);
 
 rotas.post("/pedido", validateRequest(pedidoSchema), pedido.createPedido);
 
+rotas.get("/pedido", pedido.getPedidos);
+
 rotas.use(routeNotFound)
 
 module.exports = rotas;
